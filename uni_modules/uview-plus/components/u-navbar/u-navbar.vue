@@ -1,5 +1,8 @@
 <template>
-	<view class="u-navbar">
+	<view class="u-navbar"
+		:style="{
+			backgroundImage: bgImg,
+		}">
 		<view
 			class="u-navbar__placeholder"
 			v-if="fixed && placeholder"
@@ -40,6 +43,20 @@
 							}"
 							class="u-navbar__content__left__text"
 						>{{ leftText }}</text>
+						<u-line
+							v-if="leftIcon && home"
+							direction="column"
+							:hairline="false"
+							length="16"
+							margin="0 8px"
+						></u-line>
+						<u-icon
+							v-if="home"
+							:name="home"
+							:size="homeIconSize"
+							:color="homeIconColor"
+							@tap="homeClick"
+						></u-icon>
 					</slot>
 				</view>
 				<slot name="center">
@@ -86,14 +103,18 @@
 	 * @property {Boolean}			border				导航栏底部是否显示下边框 （默认 false ）
 	 * @property {String}			leftIcon			左边返回图标的名称，只能为uView自带的图标 （默认 'arrow-left' ）
 	 * @property {String}			leftText			左边的提示文字
+	 * @property {String}			home			    左侧home图标
 	 * @property {String}			rightText			右边的提示文字
 	 * @property {String}			rightIcon			右边返回图标的名称，只能为uView自带的图标
 	 * @property {String}			title				导航栏标题，如设置为空字符，将会隐藏标题占位区域
+	 * @property {String}			bgImg				导航栏背景图片 （默认 'none' ）
 	 * @property {String}			bgColor				导航栏背景设置 （默认 '#ffffff' ）
 	 * @property {String | Number}	titleWidth			导航栏标题的最大宽度，内容超出会以省略号隐藏 （默认 '400rpx' ）
 	 * @property {String | Number}	height				导航栏高度(不包括状态栏高度在内，内部自动加上)（默认 '44px' ）
 	 * @property {String | Number}	leftIconSize		左侧返回图标的大小（默认 20px ）
 	 * @property {String | Number}	leftIconColor		左侧返回图标的颜色（默认 #303133 ）
+	 * @property {String | Number}	homeIconSize		左侧home图标的大小（默认 20px ）
+	 * @property {String | Number}	homeIconColor		左侧home图标的颜色（默认 #303133 ）
 	 * @property {Boolean}	        autoBack			点击左侧区域(返回图标)，是否自动返回上一页（默认 false ）
 	 * @property {Object | String}	titleStyle			标题的样式，对象或字符串
 	 * @event {Function} leftClick		点击左侧区域
@@ -116,6 +137,10 @@
 				if(this.autoBack) {
 					uni.navigateBack()
 				}
+			},
+			// 点击home图标
+			homeClick() {
+				this.$emit('homeClick')
 			},
 			// 点击右侧区域
 			rightClick() {

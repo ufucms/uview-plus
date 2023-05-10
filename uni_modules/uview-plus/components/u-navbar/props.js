@@ -31,6 +31,11 @@ export default {
 			type: String,
 			default: defprops.navbar.leftText
 		},
+		// home图标
+		home: {
+			type: String,
+			default: defprops.navbar.home
+		},
 		// 左右的提示文字
 		rightText: {
 			type: String,
